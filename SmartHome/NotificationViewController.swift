@@ -25,8 +25,8 @@ class NotificationViewController: UIViewController, AVAudioPlayerDelegate, AVAud
     
     @IBOutlet var timeLabel: UILabel!
     @IBOutlet var image: UIImageView!
-    @IBOutlet weak var messageTextField: UITextField!
 
+    @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     
@@ -39,6 +39,17 @@ class NotificationViewController: UIViewController, AVAudioPlayerDelegate, AVAud
         messageTextField.delegate = self
         //audio
         self.prepareAudioRecorder()
+        if currentNotification.completed {
+            responseButton.isEnabled = false
+            recordButton.isEnabled = false
+            messageTextField.isEnabled = false
+            responseButton.setTitleColor(UIColor.black, for: .disabled)
+            responseButton.backgroundColor = UIColor.gray
+            recordButton.setTitleColor(UIColor.black, for: .disabled)
+            recordButton.backgroundColor = UIColor.gray
+//            messageTextField.setTitleColor(UIColor.black, for: .disabled)
+            messageTextField.backgroundColor = UIColor.gray
+        }
         //output
         showContent()
         
@@ -58,6 +69,7 @@ class NotificationViewController: UIViewController, AVAudioPlayerDelegate, AVAud
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         currentNotification.message = textField.text!
+        print(currentNotification.message)
     }
     
     //sign out
